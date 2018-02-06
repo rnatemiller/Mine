@@ -2,6 +2,7 @@ package loggerlib
 
 import (
 	"errors"
+	"io/ioutil"
 	"runtime"
 	"time"
 )
@@ -57,7 +58,7 @@ func Savelog(filename string) error {
 		if err != nil {
 			return err
 		}
-
+		err = ioutil.WriteFile(filename, []byte(str), 0774)
 	} else {
 		return errors.New("No log available")
 	}
