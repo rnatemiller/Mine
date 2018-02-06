@@ -1,3 +1,19 @@
+/******************************************************************************
+/  filename: loggerlib.go
+/
+/ description: Implements a logger library in go
+/
+/  author: Miller, Nathaniel
+/  login id: SP_18_CPS444_02
+/
+/  class: CPS 444
+/  instructor: Perugini
+/  assignment: Homework #3
+/
+/  assigned: Febuary 5, 2018
+/  due: Febuary 9, 2018
+/
+/****************************************************************************/
 package loggerlib
 
 import (
