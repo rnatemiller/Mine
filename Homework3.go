@@ -42,15 +42,24 @@ func Getlog() (string, error) {
 	if headptr != nil {
 		curr := headptr
 		for curr != nil {
-			result += curr.item.Str + " " + curr.item.Logged_time.String() + "\n"
+			result += curr.item.Logged_time.String() + "\n" + curr.item.Str + "\n\n"
 			curr = curr.next
 		}
 	} else {
-		return "", errors.New("No log Created")
+		return "", errors.New("No log available")
 	}
 	return result, nil
 }
 
 func Savelog(filename string) error {
+	if headptr != nil {
+		str, err := Getlog()
+		if err != nil {
+			return err
+		}
+
+	} else {
+		return errors.New("No log available")
+	}
 	return nil
 }
