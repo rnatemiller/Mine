@@ -1,6 +1,8 @@
 package loggerlib
 
 import (
+	"errors"
+	"runtime"
 	"time"
 )
 
@@ -18,17 +20,37 @@ var headptr *Log_t
 var tailptr *Log_t
 
 func Addmsg(data Data_t) (int, error) {
-
+	log := Log_t{item: data, next: nil}
+	if headptr != nil {
+		tailptr.next = &log
+		tailptr = &log
+	} else {
+		headptr = &log
+		tailptr = &log
+	}
+	return 0, nil
 }
 
 func Clearlog() {
-
+	headptr = nil
+	tailptr = nil
+	runtime.GC()
 }
 
 func Getlog() (string, error) {
-
+	result := ""
+	if headptr != nil {
+		curr := headptr
+		for curr != nil {
+			result += curr.item.Str + " " + curr.item.Logged_time.String() + "\n"
+			curr = curr.next
+		}
+	} else {
+		return "", errors.New("No log Created")
+	}
+	return result, nil
 }
 
 func Savelog(filename string) error {
-
+	return nil
 }
