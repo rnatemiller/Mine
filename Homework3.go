@@ -59,6 +59,9 @@ func Savelog(filename string) error {
 			return err
 		}
 		err = ioutil.WriteFile(filename, []byte(str), 0774)
+		if err != nil {
+			return err
+		}
 	} else {
 		return errors.New("No log available")
 	}
