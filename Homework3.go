@@ -20,6 +20,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"runtime"
+	"strings"
 	"time"
 )
 
@@ -59,7 +60,7 @@ func Getlog() (string, error) {
 	if headptr != nil {
 		curr := headptr
 		for curr != nil {
-			result += curr.item.Logged_time.String() + "\n" + curr.item.Str + "\n\n"
+			result += formattime(curr.item.Logged_time) + "\n" + curr.item.Str + "\n\n"
 			curr = curr.next
 		}
 	} else {
@@ -82,4 +83,31 @@ func Savelog(filename string) error {
 		return errors.New("No log available")
 	}
 	return nil
+}
+
+func formattime(t time.Time) string {
+	var timestring string
+	months := make(map[string]string)
+
+	months["Jan"] = "01"
+	months["Feb"] = "02"
+	months["Mar"] = "03"
+	months["Apr"] = "04"
+	months["May"] = "05"
+	months["Jun"] = "06"
+	months["Jul"] = "07"
+	months["Aug"] = "08"
+	months["Sep"] = "09"
+	months["Oct"] = "10"
+	months["Nov"] = "11"
+	months["Dec"] = "12"
+
+	const layout = "Jan 2 2006 15:04:05"
+	timeslice := strings.Split(t.Format(layout), " ")
+	timestring = months[timeslice[0]] + "/"
+	if len(timeslice[1]) == 1 {
+		timestring += "0"
+	}
+	timestring += timeslice[1] + "/" + timeslice[2] + " " + timeslice[3]
+	return timestring
 }
